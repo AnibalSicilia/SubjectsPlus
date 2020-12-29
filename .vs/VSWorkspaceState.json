@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "\\assets",
+    "\\assets\\js",
+    "\\control",
+    "\\control\\guides",
+    "\\lib",
+    "\\lib\\SubjectsPlus",
+    "\\lib\\SubjectsPlus\\Control",
+    "\\lib\\SubjectsPlus\\Control\\Pluslet",
+    "\\lib\\SubjectsPlus\\Control\\Pluslet\\views"
+  ],
+  "PreviewInSolutionExplorer": false
+}
