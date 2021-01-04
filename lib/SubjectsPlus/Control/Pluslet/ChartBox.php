@@ -11,14 +11,12 @@ class Pluslet_ChartBox extends Pluslet {
 	private $_department_id;
     private $_email;
 	private $_user_type_id;
-	private $_bio;
+	private $_description;
     private $_fullname;
 	protected $_supervisor_id;
 	//new sp4
 	private $_social_media;
-
 	public $_ok_departments = array();   
-    protected $_showOrNotKeys = ['Photo', 'StaffMain', 'Address', 'Map', 'EmergencyContacts', 'SocialMedia', 'Permissions', 'Password', 'SaveChanges'];
         
     public function __construct($pluslet_id, $flag="", $subject_id, $isclone=0) {
         parent::__construct($pluslet_id, $flag, $subject_id, $isclone);
@@ -37,12 +35,12 @@ class Pluslet_ChartBox extends Pluslet {
         $num_rows = count ( $_tmp );
             if($num_rows > 0) {
                 // $this->_extra_array = json_decode($_tmp[0]['extra'], true);
-                $this->_bio = $_tmp[0]['body'];
+                $this->_description = $_tmp[0]['body'];
             }
         }
         else {
             // $this->_extra_array = json_decode($this->_extra, true);
-            $this->_bio = "";
+            $this->_description = "";
         }
     }
     
@@ -78,11 +76,10 @@ class Pluslet_ChartBox extends Pluslet {
                 $this->_fname    = $staffArray[0]['fname'];
                 $this->_fullname = $this->_fname . " " . $this->_lname;
                 $this->_title    = $staffArray[0]['title'];
-
                 //$this->_department_id = $staffArray[0]['department_id'];
                 $this->_email        = $staffArray[0]['email'];
 
-                $this->_bio          = $staffArray[0]['bio'];
+                $this->_description          = $staffArray[0]['bio'];
 
                 //if ( $full_record == true ) {
                         //$this->_password = $staffArray[0]['password'];
@@ -107,7 +104,7 @@ class Pluslet_ChartBox extends Pluslet {
         $this->_body = $output;
 
         $_ckeditor_body = "<p>" . _( "Please only include professional details." ) . "</p><br />";
-        $_ckeditor_body .= self::getCkEditorForOutputBioForm($pluslet_body);
+        $_ckeditor_body .= self::getCkEditorForOutputDescriptionForm($pluslet_body);
 
         $this->_body .= $_ckeditor_body;
     }
@@ -126,7 +123,7 @@ class Pluslet_ChartBox extends Pluslet {
         return $_body;
     }
 
-    function getCkEditorForOutputBioForm($pluslet_body) {
+    function getCkEditorForOutputDescriptionForm($pluslet_body) {
 
         global $CKPath;
         global $CKBasePath;
@@ -134,7 +131,7 @@ class Pluslet_ChartBox extends Pluslet {
          include( $CKPath );
          global $BaseURL;
 
-        $_outputBio = "";
+        $_outputDescription = "";
 
         $oCKeditor = new CKEditor( $CKBasePath );
         $oCKeditor->timestamp = time();
@@ -143,18 +140,18 @@ class Pluslet_ChartBox extends Pluslet {
         $config['height'] = '300';
         $config['filebrowserUploadUrl'] = $BaseURL . "ckeditor/php/uploader.php";
             
-        $_outputBio = $oCKeditor->editor( "editor-chart", $pluslet_body, $config );
-        return $_outputBio;
+        $_outputDescription = $oCKeditor->editor( "editor-chart", $pluslet_body, $config );
+        return $_outputDescription;
     }
 
     function outputChartPluslet() {
         // start form
-        $_body = self::buildStaffFormBody();
+        $_body = self::buildChartBoxBody();
 
         return $_body;
     }
     
-    function buildStaffFormBody() {
+    function buildChartBoxBody() {
 
         $db = new Querier;
             $q1 = "select staff_id, lname, fname, title,  active, supervisor_id, social_media
@@ -162,8 +159,7 @@ class Pluslet_ChartBox extends Pluslet {
             $staffArray = $db->query( $q1 );
              
         $_body = "<div class=\"pluslet no_overflow\">
-                   <div class=\"pluslet_body chart-ol chart-pseudo-root chart-pseudo-body\" style=\"padding:0\">
-                   <div>";
+                   <div class=\"pluslet_body chart-ol chart-pseudo-root chart-pseudo-body\" style=\"padding:0\">";
 
                     $supervisor = self::getSupervisor($this->_supervisor_id);
                     $r_count = count($supervisor);
@@ -233,8 +229,9 @@ class Pluslet_ChartBox extends Pluslet {
                                      $_body .= "</li>";
                    }
 
-                    $_body .=  "</ol></div></div></div>";
-        
+                    $_body .=  "</ol>";
+                    
+                    $_body .= "<div style=\"padding-top:20px\">" . $this->_description . "</div></div></div>";
 
         return $_body;
     }
@@ -253,8 +250,6 @@ class Pluslet_ChartBox extends Pluslet {
     }
 
     static function getMenuIcon() {
-        /*<i class="fas fa-user-circle"></i>*/
-        // $icon="<i title=\"" . _("Staff") . "\" ><img src=\"../../control/includes/images/icons/staff_small.png\" height=\"35px\"></i><span class=\"icon-text\">"  . _("Staff") . "</span>";
         $icon="<i class=\"fa fa-bar-chart\" aria-hidden=\"true\" title=\"" . _("Charts") . "\" ></i><span class=\"icon-text\">"  . _("Charts") . "</span>";
         return $icon;
     }  
