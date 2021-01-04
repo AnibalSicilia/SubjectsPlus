@@ -398,7 +398,8 @@ if ( ! is_writable( $lstrConfigFilePath ) ) {
 				'IIIWebPac',
 				_( '3' ),
 				_( '5' ),
-				'StaffBox'
+				'StaffBox',
+				'ChartBox'
 			),
 			_( "" )
 		),

@@ -324,6 +324,10 @@ function saveSetup() {
                             });
                     pspecial = $.isEmptyObject(extra) ? "" : JSON.stringify(extra);
                     break;
+                case "ChartBox":
+                    pbody = CKEDITOR.instances['editor-chart'].getData();
+                    pitem_type = item_type[2];
+                    break;
                 default:
 
                     /**

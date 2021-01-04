@@ -291,9 +291,9 @@ class Pluslet_StaffBox extends Pluslet {
                 
         // if($this->showBioForm === 'Yes') {
         $_ckeditor_body = self::getSectionHeading("Additional Info");
-        "<p>" . _( "Please only include professional details." ) . "</p><br />";
+        $_ckeditor_body .= "<p>" . _( "Please only include professional details." ) . "</p><br />";
             $_ckeditor_body .= self::getCkEditorForOutputBioForm($pluslet_body);
-            $_ckeditor_body .=  "</div></div>";
+            // $_ckeditor_body .=  "</div></div>";
         // }
 
         $this->_body .= $_ckeditor_body;
@@ -359,19 +359,16 @@ class Pluslet_StaffBox extends Pluslet {
                 <div class=\"pluslet no_overflow\">
                     <div class=\"titlebar\">
                         <div class=\"titlebar_text\">" . _( "Staff Member" ) . "</div>
-                        <div class=\"titlebar_options\"></div>
-                    </div>
-                    <div class=\"pluslet_body\">";
-
+                    </div>";
                         if($this->showPhoto == 'Yes') {
-                            $_body .= self::getHeadshot( $this->_email, "medium" ) . "<br />"; 
+                            $_body .= self::getHeadshot( $this->_email) . "<br />"; 
                         }
 
                         if($this->showStaffMain == 'Yes') { 
-                            $_body .=  "<div class=\"show-staff-main\" style=\"width:100%\"><span class=\"show-staff-main-label\">Full&nbspName: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_fullname</span></span></div>";
+                            $_body .=  "<div class=\"show-staff-main\" ><span class=\"show-staff-main-label\">Full&nbspName: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_fullname</span></span></div>";
                             $_body .=  "<div class=\"show-staff-main\"><span class=\"show-staff-main-label\">Position Title: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_title</span></div>";
                             $_body .=  "<div class=\"show-staff-main\"><span class=\"show-staff-main-label\">Position Number: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_position_number</span></div>";
-                            $_body .=  "<div class=\"show-staff-main\"><span class=\"show-staff-main-label\">Job Classification: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_job_classification</span></div>";
+                            $_body .=  "<div class=\"show-staff-main\"><span class=\"show-staff-main-label\">Job&nbspClassification: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_job_classification</span></div>";
                             $_body .=  "<div class=\"show-staff-main\"><span class=\"show-staff-main-label\">Department: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_department</span></div>";
                             $_body .=  "<div class=\"show-staff-main\"><span class=\"show-staff-main-label\">Display Priority: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_staff_sort</span></div>";
                             $_body .=  "<div class=\"show-staff-main\"><span class=\"show-staff-main-label\">Supervisor: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_supervisor</span></div>";
@@ -379,46 +376,46 @@ class Pluslet_StaffBox extends Pluslet {
                             $_body .=  "<div class=\"show-staff-main\"><span class=\"show-staff-main-label\">Fax: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_fax</span></div>";
 
 
-                            $_body .=  "<div style=\"float: left; margin-right: 1em;\"><label for=\"intercom\">" . _( "Intercom" ) . "</label>
+                            $_body .=  "<div style=\"margin-right: 0; width:45%\"><label for=\"intercom\">" . _( "Intercom" ) . "</label>
                                         <input type=\"text\" name=\"intercom\" id=\"intercom\" class=\"pure-input-1-4\" readonly=\"readonly\" value=\"" . $this->_intercom . "\" /></div>";
    
-                            $_body .=  "<div style=\"float: left;\"><label for=\"room_number\">" . _( "Room #" ) . "</label>
+                            $_body .=  "<div style=\"width:45%\"><label for=\"room_number\">" . _( "Room #" ) . "</label>
                                         <input type=\"text\" name=\"room_number\" id=\"room_number\" class=\"pure-input-1-3\" readonly=\"readonly\" value=\"" . $this->_room_number . "\" /></div>";
 
                             $_body .=  "<div class=\"show-staff-main\"><span class=\"show-staff-main-label\">Email: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_email</span></div>";
 
-                            $_body .= "</div></div>";
+                            //$_body .= "</div></div>";
                         }
 
-                if($this->showAddress === 'Yes') {
-                    $_body .=  self::getSectionHeading("Home Address Info");
-                    $_body .=  self::outputPersonalInfoForm();
-                    if($this->showMap == 'Yes') {
-                        $_body .=  self::outputLatLongForm();
-                    }
-                    $_body .= "</div></div>";
-                }
+                        if($this->showAddress === 'Yes') {
+                           // $_body .=  self::getSectionHeading("Home Address Info");
+                            $_body .=  self::outputPersonalInfoForm();
+                            if($this->showMap == 'Yes') {
+                                $_body .=  self::outputLatLongForm();
+                            }
+                           // $_body .= "</div></div>";
+                        }
 
-                if($this->showEmergencyContacts === 'Yes') {
-                    $_body .=  self::getSectionHeading("Emergency Contacts Info");
-                    $_body .=  self::outputEmergencyInfoForm();
-                    $_body .= "</div></div>";
-                }
+                        if($this->showEmergencyContacts === 'Yes') {
+                           // $_body .=  self::getSectionHeading("Emergency Contacts Info");
+                            $_body .=  self::outputEmergencyInfoForm();
+                           // $_body .= "</div></div>";
+                        }
 
-                if($this->showSocialMedia === 'Yes') {
-                    $_body .= self::getSectionHeading("Social Media Info");
-                    $socialMediaForm = self::outputSocialMediaForm();
-                    $_body .= $socialMediaForm;
-                     $_body .= "</div></div>";
-                }
+                        if($this->showSocialMedia === 'Yes') {
+                          // $_body .= self::getSectionHeading("Social Media Info");
+                            $socialMediaForm = self::outputSocialMediaForm();
+                            $_body .= $socialMediaForm;
+                           //   $_body .= "</div></div>";
+                        }
 
-                if($this->showBioForm === 'Yes' && strlen($this->_bio) > 0) {
-                    $_body .=  self::getSectionHeading("Description and Comments");
-                    $_body .=  "<div class=\"show-staff-main\">$this->_bio</div>";
-                    $_body .= "</div></div>";
-                }
+                        if($this->showBioForm === 'Yes' && strlen($this->_bio) > 0) {
+                           // $_body .=  self::getSectionHeading("Description and Comments");
+                            $_body .=  "<div class=\"show-staff-main\">$this->_bio</div>";
+                           // $_body .= "</div></div>";
+                        }
 
-        $_body .= "</div></form>"; // end pure-u / end form
+        $_body .= "</div></div></form>"; // end pure-u / end form
 
         return $_body;
     }
@@ -428,16 +425,16 @@ class Pluslet_StaffBox extends Pluslet {
             $heading = "<div class=\"pluslet\">
                     <div class=\"titlebar\">
                         <div class=\"titlebar_text\">" . _( $title ) . "</div>
-                        <div class=\"titlebar_options\"></div>
                     </div>
                     <div class=\"pluslet_body\">";
         return $heading;
     }
     
-    public function getHeadshot( $email, $pic_size = "medium" ) {
+    public function getHeadshot( $email ) {
 
         global $AssetPath;
-        $headshot = "<div><div class=\"show-staff-main\" style=\"float:left; width:60%\"><span class=\"show-staff-main-label\">User Type: </span><span style=\"border-bottom:solid; border-width:1px;\">$this->_userType</span></div>";
+        $headshot = "<div class=\"show-staff-main\" style=\"float:left; width:60%\"><span class=\"show-staff-main-label\">User Type: </span>
+        <span style=\"border-bottom:solid; border-width:1px;\">$this->_userType</span></div>";
                      
         $name_id             = explode( "@", $email );
         $lib_image           = "_" . $name_id[0];
@@ -449,17 +446,10 @@ class Pluslet_StaffBox extends Pluslet {
                 $headshot .= "<img id=\"headshot\" src=\"$AssetPath" . "images/placeholder-image.jpg\" alt=\"No picture\" title=\"No picture\"";
         }
 
-        switch ( $pic_size ) {
-                case "small":
-                        $headshot .= " width=\"50\"";
-                        break;
-                case "medium":
-                        $headshot .= " width=\"70\"";
-                        break;
-        }
+        $headshot .= " width=\"70\"";
 
         $headshot .= " class=\"staff_photo\"/ style=\"float:right ; border:solid; border-width:1px; \">";
-        $headshot .= "<div class=\"show-staff-main\" style=\"float:left; width:70%\"><span class=\"show-staff-main-label\">Active? : </span><span style=\"border-bottom:solid; border-width:1px;\">Yes</span></div></div>";
+        $headshot .= "<div class=\"show-staff-main\" style=\"float:left; width:70%\"><span class=\"show-staff-main-label\">Active? : </span><span style=\"border-bottom:solid; border-width:1px;\">Yes</span></div>";
 
         return $headshot;
 	}
