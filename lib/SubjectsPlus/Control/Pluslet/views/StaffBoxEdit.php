@@ -1,12 +1,3 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: cbrownroberts
- * Date: 8/19/16
- * Time: 3:11 PM
- */
-
-?>
 <div id="staff-box-form-container">
 
     <?php
@@ -20,8 +11,6 @@
         <h4><?php echo $this->_fname . ' ' . $this->_lname; ?></h4>
         <input type="text" name="StaffBox-staffId<?php echo $this->_staff_id; ?>" value="<?php echo $this->_staff_id; ?>" style="display:none;">
         <br>
-
-
 
         <input class="checkbox_ss" type="checkbox" name="StaffBox-extra-showPhoto<?php echo $this->_staff_id; ?>" value="<?php echo $this->showPhoto; ?>"/>
         <label style="display:inline;"> Show Photo</label>

@@ -327,6 +327,21 @@ function saveSetup() {
                 case "ChartBox":
                     pbody = CKEDITOR.instances['editor-chart'].getData();
                     pitem_type = item_type[2];
+
+                    var extra = {};
+
+                    //parse checkboxe inputs to create extra fields
+                    $(lobjThis)
+                        .find('input[name^=' + item_type[2] + '-extra][type=checkbox]')
+                        .each(
+                            function () {
+                                var name_split = $(this).attr("name").split("-");
+                                extra[name_split[2]] = typeof extra[name_split[2]] === 'undefined' ? []
+                                    : extra[name_split[2]];
+                                if ($(this).is(':checked'))
+                                    extra[name_split[2]].push($(this).val());
+                            });
+                    pspecial = $.isEmptyObject(extra) ? "" : JSON.stringify(extra);
                     break;
                 default:
 

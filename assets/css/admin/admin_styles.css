@@ -4834,3 +4834,71 @@ Blackboard Special Codes Integration Admin
     background: #7b9fe0;
 }
 
+/* CHART PIE STYLES */
+
+.chart-pie {
+    border-radius: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    width: 300px;
+    
+    border-radius: 100%;
+    border: 1px solid ;
+    margin:0 auto;
+}
+
+
+.pie-segment {
+    /*border: 5px dashed purple;*/
+    --a: calc(var(--over50, 0) * -100%);
+    --b: calc((1 + var(--over50, 0)) * 100%);
+    --degrees: calc((var(--offset, 0) / 100 ) * 360);
+    height: 100%;
+    position: absolute;
+    /*transform: translate(0, -50%) rotate(90deg) rotate(calc(var(--offset, 10) * 1deg));*/
+    transform: translate(0, -50%) rotate(90deg) rotate(calc(var(--degrees, 0) * 1deg));
+    clip-path: polygon(var(--a) var(--a), var(--b) var(--a), var(--b) var(--b), var(--a) var(--b));
+    /*-webkit-clip-path: polygon(var(--a) var(--a), var(--b) var(--a), var(--b) var(--b), var(--a) var(--b));*/
+    transform-origin: 50% 100%;
+    width: 100%;
+}
+
+
+.pie-segment::after,
+.pie-segment::before {
+    background: var(--bg, #3ccbe7);
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+.pie-segment::after {
+    transform: translate(-50%, 0);
+    opacity: var(--over50, 0);
+}
+
+.pie-segment::before {
+    --degrees: calc((var(--value, 45) / 100 ) * 360);
+    content: attr(data-label);
+    /*transform: translate(-50%, 100%) rotate(calc(var(--value, 45) * 1deg));*/
+    transform: translate(-50%, 100%) rotate(calc(var(--degrees, 45) * 1deg));
+    transform-origin: 50% 0;
+}
+
+.pie-chart-table {
+    margin-top:10px;
+    padding:5px;
+    border: 2px solid;
+}
+
+
+.pie-chart-table td {
+    border: 1px solid; 
+    padding: 2px;
+}
+
+
+
+

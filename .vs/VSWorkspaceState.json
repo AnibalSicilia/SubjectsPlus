@@ -1,11 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\assets",
-    "\\control",
-    "\\control\\includes",
     "\\lib",
-    "\\lib\\SubjectsPlus"
+    "\\lib\\SubjectsPlus",
+    "\\lib\\SubjectsPlus\\Control"
   ],
   "PreviewInSolutionExplorer": false
 }
