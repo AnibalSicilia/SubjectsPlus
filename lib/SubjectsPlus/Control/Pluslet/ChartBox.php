@@ -15,7 +15,6 @@ class Pluslet_ChartBox extends Pluslet {
     private $_fullname;
 	protected $_supervisor_id;
 	//new sp4
-	private $_social_media;
 	public $_ok_departments = array();   
     public $colors_array =  ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
 		                    '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
@@ -78,7 +77,7 @@ class Pluslet_ChartBox extends Pluslet {
     function populateFields() {
 
         $db = new Querier;
-            $q1 = "select staff_id, lname, fname, title, department_id, email, active, bio, position_number, job_classification, supervisor_id, social_media, extra
+            $q1 = "select staff_id, lname, fname, title, department_id, email, active, bio, position_number, job_classification, supervisor_id, email, extra
                 from staff where active = 1 and staff_id = " . $this->_staff_id;
         $staffArray = $db->query( $q1 );
 
@@ -270,7 +269,7 @@ class Pluslet_ChartBox extends Pluslet {
     function buildOrgChartBoxBody() {
 
         $db = new Querier;
-            $q1 = "select staff_id, lname, fname, title,  active, supervisor_id, social_media
+            $q1 = "select staff_id, lname, fname, title,  active, supervisor_id, email
                     from staff where active = 1 and supervisor_id = " . $this->_supervisor_id;
             $staffArray = $db->query( $q1 );
              
@@ -289,11 +288,12 @@ class Pluslet_ChartBox extends Pluslet {
                             
                       $_body .= "<li>
                                     <h2 class=\"chart-level-2 chart-rectangle\">
-                                    <div>" . $staffArray[$i]['fname'] . " " . $staffArray[$i]['lname'] . "</div>
+                                    <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($staffArray[$i]['email'], 0,strpos($staffArray[$i]['email'], "@")) . "\">" 
+                                    . $staffArray[$i]['fname'] . " " . $staffArray[$i]['lname'] . "</a></div>
                                     <span>". $staffArray[$i]['title'] . "</span>
                                     </h2>";
                                     $dbi = new Querier;
-                                    $q1i = "select staff_id, lname, fname, title,  active, supervisor_id, social_media
+                                    $q1i = "select staff_id, lname, fname, title,  active, supervisor_id, email
                                             from staff where active = 1 and supervisor_id = " . $staffArray[$i]['staff_id'];
                                     $tmpArray = $dbi->query( $q1i );
                                     if(count($tmpArray) > 0) {
@@ -301,13 +301,15 @@ class Pluslet_ChartBox extends Pluslet {
                                          $_body .= "<ol class=\"chart-level-3-wrapper\">
                                                       <li>
                                                         <h3 class=\"chart-level-3 chart-rectangle\">
-                                                        <div>" . $tmpArray[$x]['fname'] . " " . $tmpArray[$x]['lname'] . "</div>
+                                                        <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($tmpArray[$x]['email'], 0, strpos($tmpArray[$x]['email'], "@")) . "\">"
+                                                        . $tmpArray[$x]['fname'] . " " . $tmpArray[$x]['lname'] . "</a></div>
                                                         <span>". $tmpArray[$x]['title'] . "</span>                                                    
                                                         </h3>
                                                       </li>
                                                       <li>
                                                         <h3 class=\"chart-level-3 chart-rectangle\">
-                                                        <div>" . $tmpArray[$x+1]['fname'] . " " . $tmpArray[$x+1]['lname'] . "</div>
+                                                        <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($tmpArray[$x+1]['email'], 0, strpos($tmpArray[$x+1]['email'], "@")) . "\">"
+                                                        . $tmpArray[$x+1]['fname'] . " " . $tmpArray[$x+1]['lname'] . "</a></div>
                                                         <span>". $tmpArray[$x+1]['title'] . "</span>                                                    
                                                         </h3>
                                                       </li>
@@ -317,11 +319,12 @@ class Pluslet_ChartBox extends Pluslet {
                                      $_body .= "</li>
                                   <li>
                                     <h2 class=\"chart-level-2 chart-rectangle\">
-                                    <div>" . $staffArray[$i+1]['fname'] . " " . $staffArray[$i+1]['lname'] . "</div>
+                                    <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($staffArray[$i+1]['email'], 0,strpos($staffArray[$i+1]['email'], "@")) . "\">"
+                                    . $staffArray[$i+1]['fname'] . " " . $staffArray[$i+1]['lname'] . "</a></div>
                                     <span>". $staffArray[$i+1]['title'] . "</span>
                                     </h2>";
                                     $dbi = new Querier;
-                                    $q1i = "select staff_id, lname, fname, title,  active, supervisor_id, social_media
+                                    $q1i = "select staff_id, lname, fname, title,  active, supervisor_id, email
                                             from staff where active = 1 and supervisor_id = " . $staffArray[$i + 1]['staff_id'];
                                     $tmpArray = $dbi->query( $q1i );
                                     if(count($tmpArray) > 0) {
@@ -329,13 +332,15 @@ class Pluslet_ChartBox extends Pluslet {
                                          $_body .= "<ol class=\"chart-level-3-wrapper\">
                                                       <li>
                                                         <h3 class=\"chart-level-3 chart-rectangle\">
-                                                        <div>" . $tmpArray[$x]['fname'] . " " . $tmpArray[$x]['lname'] . "</div>
+                                                        <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($tmpArray[$x]['email'], 0, strpos($tmpArray[$x]['email'], "@")) . "\">"
+                                                        . $tmpArray[$x]['fname'] . " " . $tmpArray[$x]['lname'] . "</a></div>
                                                         <span>". $tmpArray[$x]['title'] . "</span>                                                    
                                                         </h3>
                                                       </li>
                                                       <li>
                                                         <h3 class=\"chart-level-3 chart-rectangle\">
-                                                        <div>" . $tmpArray[$x+1]['fname'] . " " . $tmpArray[$x+1]['lname'] . "</div>
+                                                        <a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($tmpArray[$x+1]['email'], 0, strpos($tmpArray[$x+1]['email'], "@")) . "\">
+                                                        <div>" . $tmpArray[$x+1]['fname'] . " " . $tmpArray[$x+1]['lname'] . "</a></div>
                                                         <span>". $tmpArray[$x+1]['title'] . "</span>                                                    
                                                         </h3>
                                                       </li>
