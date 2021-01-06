@@ -225,7 +225,7 @@ class Pluslet_ChartBox extends Pluslet {
     function buildPieChartBoxBody() {
         $db = new Querier;
         $q = "SELECT count(d.department_id) as department_count,`name`, `telephone`FROM department d, staff s 
-        where s.department_id = d.department_id group by (d.department_id) order by count(d.department_id)";
+        where s.department_id = d.department_id group by (d.department_id) ";
         $departmentArray = $db->query($q);
          $_body = "<div class=\"pluslet no_overflow\">
                    <div class=\"pluslet_body chart-ol chart-pseudo-root chart-pseudo-body\" style=\"padding:0\">";
@@ -233,13 +233,13 @@ class Pluslet_ChartBox extends Pluslet {
         $_totalStaff = array_sum(array_column($departmentArray,'department_count'));
 
         $_body .= "<div class=\"chart-pie\">";
-        $_table =  "<table class=\"pie-chart-table\"><tr><th>Count</th><th>Dpt Name</th><th>Color</th></tr>";
+        $_table =  "<table class=\"pie-chart-table\"><tr><th>Count</th><th>%</th><th>Dpt Name</th><th>Color</th></tr>";
         $previousValue = 0;
         if($_totalStaff > 0) {
             for ($i = 0; $i < count($departmentArray); $i++)  {
         
-               $current_dpt_pct = $departmentArray[$i]['department_count'] / $_totalStaff * 100;
-               $previousValue += $i > 0 ? $current_dpt_pct : 0;
+               $current_dpt_pct = ($departmentArray[$i]['department_count'] / $_totalStaff) * 100;
+               $previousValue += $i > 0 ? ($departmentArray[$i-1]['department_count'] / $_totalStaff) * 100 : 0;
 
                 $department_name = $departmentArray[$i]['name'];
                                     
@@ -251,7 +251,7 @@ class Pluslet_ChartBox extends Pluslet {
                         $_body .= "--bg:" . $this->colors_array[$i] . "\"></div>";
                     } 
 
-                $_table .= "<tr><td>" . $departmentArray[$i]['department_count'] . "</td>
+                $_table .= "<tr><td>" . $departmentArray[$i]['department_count'] . "</td><td>" . number_format($current_dpt_pct, 2) . "</td>
                        <td>" . $departmentArray[$i]['name'] . " </td>
                        <td style=\"background-color: " . $this->colors_array[$i] . "\"></td></tr>";
             }

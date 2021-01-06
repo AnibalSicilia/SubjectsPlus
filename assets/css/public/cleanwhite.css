@@ -2090,9 +2090,15 @@ img.pluslet_card_image {
     border: 2px solid;
 }
 
-.pie-chart-table td {
+.pie-chart-table td,th {
     border: 1px solid;
     padding: 2px;
+}
+
+.pie-chart-table tr th {
+    background: gray;
+    padding:4px;
+    color: white;
 }
 
 

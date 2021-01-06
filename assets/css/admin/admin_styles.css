@@ -4894,10 +4894,12 @@ Blackboard Special Codes Integration Admin
 }
 
 
-.pie-chart-table td {
+.pie-chart-table td,th {
     border: 1px solid; 
     padding: 2px;
 }
+
+
 
 
 
