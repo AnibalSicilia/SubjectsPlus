@@ -218,6 +218,9 @@ class Pluslet_ChartBox extends Pluslet {
         else if($this->showPieChart === "Yes"){
             $_body = self::buildPieChartBoxBody();
         }
+        else {
+            $_body = "";
+        }
         return $_body;
     }
 
@@ -290,7 +293,7 @@ class Pluslet_ChartBox extends Pluslet {
                     </h1>";
                     
                     $_body .= "<ol class=\"chart-level-2-wrapper\">";
-                   for ($i = 0; $i < count($staffArray) - 1; $i=$i+2)  {  
+                   for ($i = 0; $i < count($staffArray); $i=$i+2)  {  
                             
                       $_body .= "<li>
                                     <h2 class=\"chart-level-2 chart-rectangle\">
@@ -322,38 +325,40 @@ class Pluslet_ChartBox extends Pluslet {
                                                     </ol>";   
                                         }
                                     }
-                                     $_body .= "</li>
-                                  <li>
-                                    <h2 class=\"chart-level-2 chart-rectangle\">
-                                    <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($staffArray[$i+1]['email'], 0,strpos($staffArray[$i+1]['email'], "@")) . "\">"
-                                    . $staffArray[$i+1]['fname'] . " " . $staffArray[$i+1]['lname'] . "</a></div>
-                                    <span>". $staffArray[$i+1]['title'] . "</span>
-                                    </h2>";
-                                    $dbi = new Querier;
-                                    $q1i = "select staff_id, lname, fname, title,  active, supervisor_id, email
-                                            from staff where active = 1 and supervisor_id = " . $staffArray[$i + 1]['staff_id'];
-                                    $tmpArray = $dbi->query( $q1i );
-                                    if(count($tmpArray) > 0) {
-                                        for ($x = 0; $x < count($tmpArray) - 1; $x=$x+2)  {  
-                                         $_body .= "<ol class=\"chart-level-3-wrapper\">
-                                                      <li>
-                                                        <h3 class=\"chart-level-3 chart-rectangle\">
-                                                        <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($tmpArray[$x]['email'], 0, strpos($tmpArray[$x]['email'], "@")) . "\">"
-                                                        . $tmpArray[$x]['fname'] . " " . $tmpArray[$x]['lname'] . "</a></div>
-                                                        <span>". $tmpArray[$x]['title'] . "</span>                                                    
-                                                        </h3>
-                                                      </li>
-                                                      <li>
-                                                        <h3 class=\"chart-level-3 chart-rectangle\">
-                                                        <a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($tmpArray[$x+1]['email'], 0, strpos($tmpArray[$x+1]['email'], "@")) . "\">
-                                                        <div>" . $tmpArray[$x+1]['fname'] . " " . $tmpArray[$x+1]['lname'] . "</a></div>
-                                                        <span>". $tmpArray[$x+1]['title'] . "</span>                                                    
-                                                        </h3>
-                                                      </li>
-                                                    </ol>";   
-                                        }
-                                    }
                                      $_body .= "</li>";
+                                if(($i + 1) < (count($staffArray) - 1)) {
+                                     $_body .= "<li>
+                                        <h2 class=\"chart-level-2 chart-rectangle\">
+                                        <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($staffArray[$i+1]['email'], 0,strpos($staffArray[$i+1]['email'], "@")) . "\">"
+                                        . $staffArray[$i+1]['fname'] . " " . $staffArray[$i+1]['lname'] . "</a></div>
+                                        <span>". $staffArray[$i+1]['title'] . "</span>
+                                        </h2>";
+                                        $dbi = new Querier;
+                                        $q1i = "select staff_id, lname, fname, title,  active, supervisor_id, email
+                                                from staff where active = 1 and supervisor_id = " . $staffArray[$i + 1]['staff_id'];
+                                        $tmpArray = $dbi->query( $q1i );
+                                        if(count($tmpArray) > 0) {
+                                            for ($x = 0; $x < count($tmpArray) - 1; $x=$x+2)  {  
+                                             $_body .= "<ol class=\"chart-level-3-wrapper\">
+                                                          <li>
+                                                            <h3 class=\"chart-level-3 chart-rectangle\">
+                                                            <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($tmpArray[$x]['email'], 0, strpos($tmpArray[$x]['email'], "@")) . "\">"
+                                                            . $tmpArray[$x]['fname'] . " " . $tmpArray[$x]['lname'] . "</a></div>
+                                                            <span>". $tmpArray[$x]['title'] . "</span>                                                    
+                                                            </h3>
+                                                          </li>
+                                                          <li>
+                                                            <h3 class=\"chart-level-3 chart-rectangle\">
+                                                            <a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($tmpArray[$x+1]['email'], 0, strpos($tmpArray[$x+1]['email'], "@")) . "\">
+                                                            <div>" . $tmpArray[$x+1]['fname'] . " " . $tmpArray[$x+1]['lname'] . "</a></div>
+                                                            <span>". $tmpArray[$x+1]['title'] . "</span>                                                    
+                                                            </h3>
+                                                          </li>
+                                                        </ol>";   
+                                            }
+                                        }
+                                      $_body .= "</li>";
+                                 }
                    }
 
                     $_body .=  "</ol>";
