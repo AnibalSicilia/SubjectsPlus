@@ -97,7 +97,7 @@ class Pluslet_ChartBox extends Pluslet {
                         //$this->_password = $staffArray[0]['password'];
 
                 //New for UM
-                  $this->_supervisor_id  = $staffArray[0]['supervisor_id'];
+                  $this->_supervisor_id  = is_null($staffArray[0]['supervisor_id']) ? $this->_staff_id : $staffArray[0]['supervisor_id'];
 
                 //new for sp4
                 $this->_extra        = $staffArray[0]['extra'];
@@ -276,10 +276,16 @@ class Pluslet_ChartBox extends Pluslet {
         $_body = "<div class=\"pluslet no_overflow\">
                    <div class=\"pluslet_body chart-ol chart-pseudo-root chart-pseudo-body\" style=\"padding:0\">";
 
-                    $supervisor = self::getSupervisor($this->_supervisor_id);
+                    if(is_null($this->_supervisor_id) === false) {
+                        $supervisor = self::getSupervisor($this->_supervisor_id);
+                    }
+                    else {
+                        $supervisor = $this->_staff_id;
+                    }
                     $r_count = count($supervisor);
                     $_body .= "<h1  class=\"chart-level-1 chart-rectangle\">
-                        <div>" . $supervisor[0]['fullname'] . "</div>
+                        <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($supervisor[0]['email'], 0, strpos($supervisor[0]['email'], "@")) . "\">"
+                        . $supervisor[0]['fullname'] . "</a></div>
                         <div style=\"font-weight: normal; padding-top:5px; font-size:.9em;\">". $supervisor[0]['title'] . "</div>     
                     </h1>";
                     
@@ -288,7 +294,7 @@ class Pluslet_ChartBox extends Pluslet {
                             
                       $_body .= "<li>
                                     <h2 class=\"chart-level-2 chart-rectangle\">
-                                    <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($staffArray[$i]['email'], 0,strpos($staffArray[$i]['email'], "@")) . "\">" 
+                                    <div><a href=\"" . PATH_TO_SP . "subjects/staff_details.php?name=" .  substr($staffArray[$i]['email'], 0, strpos($staffArray[$i]['email'], "@")) . "\">" 
                                     . $staffArray[$i]['fname'] . " " . $staffArray[$i]['lname'] . "</a></div>
                                     <span>". $staffArray[$i]['title'] . "</span>
                                     </h2>";
@@ -359,9 +365,8 @@ class Pluslet_ChartBox extends Pluslet {
 
     protected function getSupervisor($supervisor_id) {
         $db = new  Querier();
-        $q       = "select staff_id, title, CONCAT( fname, ' ', lname ) AS fullname FROM staff WHERE staff_id = " . $supervisor_id;
+        $q       = "select staff_id, title, CONCAT( fname, ' ', lname ) AS fullname, email FROM staff WHERE staff_id = " . $supervisor_id;
         $supervisor   = $db->query($q);
-        $r_count = count($supervisor);
         
         return $supervisor;      
     }  

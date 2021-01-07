@@ -4899,6 +4899,12 @@ Blackboard Special Codes Integration Admin
     padding: 2px;
 }
 
+.pie-chart-table tr th {
+    background: gray;
+    padding:4px;
+    color: white;
+}
+
 
 
 
